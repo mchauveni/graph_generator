@@ -23,7 +23,7 @@ class CanvasHandler {
         ctx.clearRect(0, 0, window.visualViewport.width * (1 / this.zoomFactor), window.visualViewport.height * (1 / this.zoomFactor));
 
         ctx.beginPath();
-        ctx.fillStyle = "#000c17";
+        ctx.fillStyle = "#eeeeee";
         ctx.rect(0, 0, window.visualViewport.width * (1 / this.zoomFactor), window.visualViewport.height * (1 / this.zoomFactor));
         ctx.fill();
 

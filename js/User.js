@@ -1,7 +1,9 @@
 class User {
     static selectedNode = -1;
     static hoveredNode = -1;
-    static clickedNode = -1;
+    static mousedown = false;
+    static mousedrag = false;
+
     static moveHandler = {
         lastClickCoords: {
             x: 0,
@@ -31,11 +33,10 @@ class User {
 
             // Puts the node at the end of the Compnode.allNodes array
             // So it overlap the other nodes (latest used is latest drawn)
+            // (invert the current node and the last)
             let nodeIndex = Node.allNodes.indexOf(Node.find(id));
             if (nodeIndex < Node.allNodes.length - 1) {
-                let temp = Node.allNodes[Node.allNodes.length - 1];
-                Node.allNodes[Node.allNodes.length - 1] = Node.allNodes[nodeIndex];
-                Node.allNodes[nodeIndex] = temp;
+                Node.allNodes.push(Node.allNodes.splice(nodeIndex, 1)[0]);
             }
         }
 
@@ -60,5 +61,14 @@ class User {
             x: coords.x,
             y: coords.y,
         };
+    }
+
+    static mousePos(mouse) {
+        var rect = canvas.getBoundingClientRect();
+        let coords = {
+            x: mouse.clientX - rect.left,
+            y: mouse.clientY - rect.top,
+        };
+        return coords;
     }
 }

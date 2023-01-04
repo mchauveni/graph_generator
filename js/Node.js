@@ -11,10 +11,11 @@ class Node {
      * @param {int} coords.y
      * @param {int[]} linkedNodes ID of all linked nodes
      */
-    constructor(id, name, coords, linkedNodes) {
+    constructor(id, name, coords, linkedNodes, color = BLUE) {
         this.id = id;
         this.name = name;
         this.coords = coords;
+        this.color = color;
         this.hovered = false;
         this.selected = false;
         this.linkedNodes = linkedNodes;
@@ -22,13 +23,23 @@ class Node {
         Node.allNodes.push(this);
     }
 
+    static defaultNodePath(x, y) {
+        // Create circle
+        let circle = new Path2D();
+        ctx.arc(x, y, 50, 0, 2 * Math.PI);
+        ctx.fill(circle);
+
+        return circle;
+    }
+
     draw() {
+        let color = this.color;
         ctx.beginPath();
 
-        if (this.hovered || this.selected) {
+        if (this.hovered) {
             ctx.fillStyle = RED;
         } else {
-            ctx.fillStyle = BLUE;
+            ctx.fillStyle = color;
         }
 
         // Draw circle
@@ -41,13 +52,16 @@ class Node {
         let nameOffsetX = ctx.measureText(this.name).width / 2;
         ctx.fillText(this.name, this.coords.x - nameOffsetX, this.coords.y + 6);
 
-        // Make border
-        if (this.selected) {
-            ctx.strokeStyle = YELLOW;
-        } else {
-            ctx.strokeStyle = GREY;
-        }
         ctx.beginPath();
+        if (this.selected) {
+            ctx.strokeStyle = BLACK;
+        } else if (this.hovered) {
+            ctx.strokeStyle = shadeColor(RED, -30);
+        } else {
+            ctx.strokeStyle = shadeColor(color, -30);
+        }
+
+        // Make border
         ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
         ctx.stroke();
     }
@@ -104,22 +118,18 @@ class Node {
 
                 //MAKE A GRADIENT
                 var gradient = ctx.createLinearGradient(node.coords.x, node.coords.y, linkedNode.coords.x, linkedNode.coords.y);
-                gradient.addColorStop(0, YELLOW);
-                gradient.addColorStop(1, GREY);
+                gradient.addColorStop(0, BLACK);
+                gradient.addColorStop(0.7, LIGHTGRAY);
+                gradient.addColorStop(1, LIGHTGRAY);
 
-                // Draw the "outline" of the link
-                ctx.lineWidth = 10;
-                ctx.strokeStyle = "#a3d08c33";
-                ctx.beginPath();
-                ctx.moveTo(node.coords.x, node.coords.y);
-                ctx.lineTo(linkedNode.coords.x, linkedNode.coords.y);
-                ctx.stroke();
-
-                // Draw the "actual" link
+                // Draw the actual link
                 ctx.lineWidth = 5;
+                ctx.strokeStyle = LIGHTGRAY;
+                /*
                 if (node.selected) {
                     ctx.strokeStyle = gradient;
                 }
+                */
                 ctx.beginPath();
                 ctx.moveTo(node.coords.x, node.coords.y);
                 ctx.lineTo(linkedNode.coords.x, linkedNode.coords.y);

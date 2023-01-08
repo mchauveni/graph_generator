@@ -81,8 +81,8 @@ canvas.addEventListener("mousemove", (e) => {
         let node = Node.find(User.selectedNode);
 
         node.move({
-            x: coords.x * (1 / CanvasHandler.zoomFactor) + User.moveHandler.offsetCoords.x,
-            y: coords.y * (1 / CanvasHandler.zoomFactor) + User.moveHandler.offsetCoords.y,
+            x: (coords.x + User.moveHandler.offsetCoords.x) * (1 / CanvasHandler.zoomFactor),
+            y: (coords.y + User.moveHandler.offsetCoords.y) * (1 / CanvasHandler.zoomFactor),
         });
     }
 

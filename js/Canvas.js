@@ -1,4 +1,7 @@
-class Canvas {
+import { ctx, colors } from "./config.js";
+import { Node } from "./Node.js";
+
+export class Canvas {
     static zoomFactor = 1;
 
     static zoom(zoom) {

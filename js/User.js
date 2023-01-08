@@ -1,4 +1,8 @@
-class User {
+import { Node } from "./Node.js";
+import { Canvas } from "./Canvas.js";
+import { canvas } from "./config.js";
+
+export class User {
     static selectedNode = -1;
     static hoveredNode = -1;
     static mousedown = false;

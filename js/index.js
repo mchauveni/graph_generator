@@ -1,3 +1,8 @@
+import { canvas, body, ctx, savebtn, colors, shadeColor, download } from "./config.js";
+import { Canvas } from "./Canvas.js";
+import { User } from "./User.js";
+import { Node } from "./Node.js";
+
 /**
  * TODO :
  * - Make the nodes a JSON file we can save/import
@@ -7,9 +12,9 @@
  */
 
 let node1 = new Node(1, "Reginald", { x: 500, y: 200 }, [2, 3, 4]);
-let node2 = new Node(2, "Jean", { x: 300, y: 200 }, [1, 4], LIGHTBLUE);
-let node3 = new Node(3, "Henry", { x: 400, y: 300 }, [1], YELLOW);
-let node4 = new Node(4, "Patrick", { x: 200, y: 300 }, [2, 1], GREEN);
+let node2 = new Node(2, "Jean", { x: 300, y: 200 }, [1, 4], colors.BLURPLE);
+let node3 = new Node(3, "Henry", { x: 400, y: 300 }, [1], colors.YELLOW);
+let node4 = new Node(4, "Patrick", { x: 200, y: 300 }, [2, 1], colors.GREEN);
 
 try {
     Node.checkData();

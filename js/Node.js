@@ -1,4 +1,6 @@
-class Node {
+import { ctx, colors, shadeColor } from "./config.js";
+
+export class Node {
     static allNodes = [];
     static links = [];
 
@@ -11,7 +13,7 @@ class Node {
      * @param {int} coords.y
      * @param {int[]} linkedNodes ID of all linked nodes
      */
-    constructor(id, name, coords, linkedNodes, color = BLUE) {
+    constructor(id, name, coords, linkedNodes, color = colors.BLUE) {
         this.id = id;
         this.name = name;
         this.coords = coords;
@@ -48,9 +50,9 @@ class Node {
 
         ctx.beginPath();
         if (this.selected) {
-            ctx.strokeStyle = BLACK;
+            ctx.strokeStyle = colors.BLACK;
         } else if (this.hovered) {
-            ctx.strokeStyle = shadeColor(GREY, -30);
+            ctx.strokeStyle = shadeColor(colors.GREY, -30);
         } else {
             ctx.strokeStyle = shadeColor(this.color, -30);
         }
@@ -113,13 +115,13 @@ class Node {
 
                 //MAKE A GRADIENT
                 var gradient = ctx.createLinearGradient(node.coords.x, node.coords.y, linkedNode.coords.x, linkedNode.coords.y);
-                gradient.addColorStop(0, BLACK);
-                gradient.addColorStop(0.7, LIGHTGRAY);
-                gradient.addColorStop(1, LIGHTGRAY);
+                gradient.addColorStop(0, colors.BLACK);
+                gradient.addColorStop(0.7, colors.LIGHTGRAY);
+                gradient.addColorStop(1, colors.LIGHTGRAY);
 
                 // Draw the actual link
                 ctx.lineWidth = 5;
-                ctx.strokeStyle = LIGHTGRAY;
+                ctx.strokeStyle = colors.LIGHTGRAY;
                 /*
                 if (node.selected) {
                     ctx.strokeStyle = gradient;

@@ -39,7 +39,11 @@ export class Node {
         ctx.fillStyle = this.color;
 
         // Draw circle
-        ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
+        if (this.hovered || this.selected) {
+            ctx.arc(this.coords.x, this.coords.y, 55, 0, 2 * Math.PI);
+        } else {
+            ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
+        }
         ctx.fill();
 
         // Write text
@@ -49,16 +53,16 @@ export class Node {
         ctx.fillText(this.name, this.coords.x - nameOffsetX, this.coords.y + 6);
 
         ctx.beginPath();
-        if (this.selected) {
-            ctx.strokeStyle = colors.BLACK;
-        } else if (this.hovered) {
-            ctx.strokeStyle = shadeColor(colors.GREY, -30);
-        } else {
-            ctx.strokeStyle = shadeColor(this.color, -30);
-        }
+        ctx.strokeStyle = shadeColor(this.color, -30);
 
         // Make border
-        ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
+        if (this.selected || this.hovered) {
+            ctx.lineWidth = 8;
+            ctx.arc(this.coords.x, this.coords.y, 55, 0, 2 * Math.PI);
+        } else {
+            ctx.lineWidth = 5;
+            ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
+        }
         ctx.stroke();
     }
 

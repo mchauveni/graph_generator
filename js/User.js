@@ -26,10 +26,15 @@ export class User {
      * @param {int} id ID of the node we want to Select
      */
     static setSelectedNode(id) {
+        if (id == User.selectedNode) {
+            return;
+        }
+
+        /* Unselect currently selected node, if selected */
+        if (Node.find(User.selectedNode)) {
+            Node.find(User.selectedNode).selected = false;
+        }
         this.selectedNode = id;
-        Node.allNodes.forEach((node) => {
-            node.selected = false;
-        });
 
         if (id != -1) {
             Node.find(id).selected = true;
@@ -41,9 +46,8 @@ export class User {
                 y: Node.find(id).coords.y * Canvas.zoomFactor - this.moveHandler.lastClickCoords.y,
             };
 
-            // Puts the node at the end of the Compnode.allNodes array
+            // Puts the node at the end of the Node.allNodes array
             // So it overlap the other nodes (latest used is latest drawn)
-            // (invert the current node and the last)
             let nodeIndex = Node.allNodes.indexOf(Node.find(id));
             if (nodeIndex < Node.allNodes.length - 1) {
                 Node.allNodes.push(Node.allNodes.splice(nodeIndex, 1)[0]);

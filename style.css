@@ -51,12 +51,18 @@ canvas {
     cursor: crosshair;
 }
 
-#NO {
-    color: #c2aa76;
-    color: #d84545;
-    color: #656fc9;
-    color: #a3d08c;
-    color: #5de6f5;
-    color: #666666;
-    color: #cccccc;
+#node_config_menu {
+    min-width: 15rem;
+    width: fit-content;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: -20%;
+    background-color: white;
+    box-shadow: 0 0 5px 5px #ccc;
+    transition: 300ms linear;
+}
+
+#node_config_menu.nodeClicked {
+    right: 0;
 }

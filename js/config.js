@@ -33,7 +33,7 @@ function download(filename, text) {
 
 /*  stolen from :
     https://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
-    percentage can be negative
+    note : percentage can be negative
 */
 function shadeColor(color, percent) {
     var R = parseInt(color.substring(1, 3), 16);

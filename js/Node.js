@@ -33,14 +33,8 @@ class Node {
     }
 
     draw() {
-        let color = this.color;
         ctx.beginPath();
-
-        if (this.hovered) {
-            ctx.fillStyle = RED;
-        } else {
-            ctx.fillStyle = color;
-        }
+        ctx.fillStyle = this.color;
 
         // Draw circle
         ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
@@ -56,9 +50,9 @@ class Node {
         if (this.selected) {
             ctx.strokeStyle = BLACK;
         } else if (this.hovered) {
-            ctx.strokeStyle = shadeColor(RED, -30);
+            ctx.strokeStyle = shadeColor(GREY, -30);
         } else {
-            ctx.strokeStyle = shadeColor(color, -30);
+            ctx.strokeStyle = shadeColor(this.color, -30);
         }
 
         // Make border
@@ -67,7 +61,8 @@ class Node {
     }
 
     /**
-     * @deprecated
+     * Moves a Node to said coordinates
+     *
      * @param {*} coords
      */
     move(coords) {

@@ -1,6 +1,6 @@
 import { Node } from "./Node.js";
 import { Canvas } from "./Canvas.js";
-import { canvas } from "./config.js";
+import { canvas, nodeMenu } from "./config.js";
 
 export class User {
     static selectedNode = -1;
@@ -36,6 +36,10 @@ export class User {
         }
         this.selectedNode = id;
 
+        if (id == -1) {
+            nodeMenu.classList.remove("nodeClicked");
+        }
+
         if (id != -1) {
             Node.find(id).selected = true;
 
@@ -52,6 +56,8 @@ export class User {
             if (nodeIndex < Node.allNodes.length - 1) {
                 Node.allNodes.push(Node.allNodes.splice(nodeIndex, 1)[0]);
             }
+
+            nodeMenu.classList.add("nodeClicked");
         }
 
         Canvas.update();

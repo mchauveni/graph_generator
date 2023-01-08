@@ -1,4 +1,4 @@
-class CanvasHandler {
+class Canvas {
     static zoomFactor = 1;
 
     static zoom(zoom) {

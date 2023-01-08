@@ -1,7 +1,6 @@
 /**
  * TODO :
  * - Make the nodes a JSON file we can save/import
- * - Fix move broken by zoom
  * - Draw links ONCE
  * - Move canvas
  * - Custom menu to edit bolls (https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724)
@@ -18,13 +17,13 @@ try {
     console.error(e);
 }
 
-CanvasHandler.update();
+Canvas.update();
 
 // Resize canvas when resizing the page
 window.addEventListener("resize", () => {
     canvas.width = window.visualViewport.width;
     canvas.height = window.visualViewport.height;
-    CanvasHandler.update();
+    Canvas.update();
 });
 
 // MOUSEDOWN ============================================================================================================================
@@ -41,7 +40,7 @@ canvas.addEventListener("mousedown", (e) => {
         User.setSelectedNode(-1);
     }
 
-    CanvasHandler.update();
+    Canvas.update();
 });
 
 // MOUSEUP ============================================================================================================================
@@ -53,7 +52,7 @@ canvas.addEventListener("mouseup", (e) => {
 
     User.mousedown = false;
     User.mousedrag = false;
-    CanvasHandler.update();
+    Canvas.update();
 });
 
 // MOUSEMOVE ============================================================================================================================
@@ -81,23 +80,23 @@ canvas.addEventListener("mousemove", (e) => {
         let node = Node.find(User.selectedNode);
 
         node.move({
-            x: (coords.x + User.moveHandler.offsetCoords.x) * (1 / CanvasHandler.zoomFactor),
-            y: (coords.y + User.moveHandler.offsetCoords.y) * (1 / CanvasHandler.zoomFactor),
+            x: (coords.x + User.moveHandler.offsetCoords.x) * (1 / Canvas.zoomFactor),
+            y: (coords.y + User.moveHandler.offsetCoords.y) * (1 / Canvas.zoomFactor),
         });
     }
 
-    CanvasHandler.update();
+    Canvas.update();
 });
 
 // WHEEL (SCROLL) ============================================================================================================================
 canvas.addEventListener("wheel", (e) => {
     if (e.deltaY > 0) {
         //zoom out
-        CanvasHandler.zoom(-0.1);
+        Canvas.zoom(-0.1);
     }
     if (e.deltaY < 0) {
         //zoom in
-        CanvasHandler.zoom(0.1);
+        Canvas.zoom(0.1);
     }
 });
 

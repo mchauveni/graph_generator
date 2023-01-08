@@ -15,6 +15,12 @@ class User {
         },
     };
 
+    /**
+     * Makes a Node selected.
+     * Changes User.selectedNode & node.selected
+     *
+     * @param {int} id ID of the node we want to Select
+     */
     static setSelectedNode(id) {
         this.selectedNode = id;
         Node.allNodes.forEach((node) => {
@@ -27,8 +33,8 @@ class User {
             // When selecting a Node, calculate offset from center of the node to cursor location
             // Useful only for the node not to blink to cursor if not centered properly
             this.moveHandler.offsetCoords = {
-                x: Node.find(id).coords.x * CanvasHandler.zoomFactor - this.moveHandler.lastClickCoords.x,
-                y: Node.find(id).coords.y * CanvasHandler.zoomFactor - this.moveHandler.lastClickCoords.y,
+                x: Node.find(id).coords.x * Canvas.zoomFactor - this.moveHandler.lastClickCoords.x,
+                y: Node.find(id).coords.y * Canvas.zoomFactor - this.moveHandler.lastClickCoords.y,
             };
 
             // Puts the node at the end of the Compnode.allNodes array
@@ -40,7 +46,7 @@ class User {
             }
         }
 
-        CanvasHandler.update();
+        Canvas.update();
     }
 
     static setHoveredNode(id) {
@@ -53,7 +59,7 @@ class User {
             Node.find(id).hovered = true;
         }
 
-        CanvasHandler.update();
+        Canvas.update();
     }
 
     static registerCoords(coords) {

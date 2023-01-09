@@ -65,7 +65,7 @@ canvas.addEventListener("mouseup", (e) => {
     Canvas.update();
 });
 
-// MOUSEMOVE  ============================================================================================================================
+// MOUSEMOVE ============================================================================================================================
 canvas.addEventListener("mousemove", (e) => {
     if (User.mousedown) {
         // If user is clicking & moving, then they are dragging duh

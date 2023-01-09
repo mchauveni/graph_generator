@@ -1,4 +1,4 @@
-import { ctx, colors, shadeColor } from "./config.js";
+import { ctx, colors, shadeColor, download } from "./config.js";
 
 export class Node {
     static allNodes = [];
@@ -39,11 +39,7 @@ export class Node {
         ctx.fillStyle = this.color;
 
         // Draw circle
-        if (this.hovered || this.selected) {
-            ctx.arc(this.coords.x, this.coords.y, 55, 0, 2 * Math.PI);
-        } else {
-            ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
-        }
+        ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
         ctx.fill();
 
         // Write text
@@ -57,8 +53,9 @@ export class Node {
 
         // Make border
         if (this.selected || this.hovered) {
+            // if hovered/selected, border is larger but inset
             ctx.lineWidth = 8;
-            ctx.arc(this.coords.x, this.coords.y, 55, 0, 2 * Math.PI);
+            ctx.arc(this.coords.x, this.coords.y, 47, 0, 2 * Math.PI);
         } else {
             ctx.lineWidth = 5;
             ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);

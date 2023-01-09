@@ -52,6 +52,7 @@ canvas {
 }
 
 #node_config_menu {
+    padding: 2rem;
     min-width: 15rem;
     width: fit-content;
     height: 100%;
@@ -65,4 +66,27 @@ canvas {
 
 #node_config_menu.nodeClicked {
     right: 0;
+}
+
+#node_config_menu h3 {
+    margin: 1.5rem 0;
+}
+
+#color_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.color_picker {
+    width: 3rem;
+    height: 2rem;
+    border-radius: 1px;
+    border: 4px solid;
+}
+
+.color_picker a {
+    display: block;
+    width: 100%;
+    height: 100%;
 }

@@ -5,12 +5,12 @@ import { Canvas } from "./Canvas.js";
 
 const colorWrapper = document.querySelector("#color_wrapper");
 
-function colorItem(colorHex, colorName) {
+function colorItem(colorName) {
     let div = document.createElement("div");
 
     div.classList.add("color_picker");
-    div.style.backgroundColor = colorHex;
-    div.style.borderColor = shadeColor(colorHex, -30);
+    div.style.backgroundColor = colors[colorName];
+    div.style.borderColor = shadeColor(colors[colorName], -30);
     div.dataset.color = colorName;
 
     div.addEventListener("click", () => {
@@ -23,8 +23,6 @@ function colorItem(colorHex, colorName) {
 
 document.addEventListener("DOMContentLoaded", () => {
     for (const color in colors) {
-        console.log(color);
-        let colorName = color;
-        colorWrapper.appendChild(colorItem(colors[color], colorName));
+        colorWrapper.appendChild(colorItem(color));
     }
 });

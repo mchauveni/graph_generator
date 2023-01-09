@@ -4,6 +4,7 @@ import { Node } from "./Node.js";
 import { Canvas } from "./Canvas.js";
 
 export const colorWrapper = document.querySelector("#color_wrapper");
+export const nodeNameViz = document.querySelector("#node_name");
 
 export function colorItem(colorName) {
     let div = document.createElement("div");
@@ -20,3 +21,5 @@ export function colorItem(colorName) {
 
     return div;
 }
+
+export function openMenu() {}

@@ -36,6 +36,7 @@ export class Node {
 
     draw() {
         ctx.beginPath();
+        ctx.setLineDash([0]);
         ctx.fillStyle = this.color;
 
         // Draw circle
@@ -54,8 +55,9 @@ export class Node {
         // Make border
         if (this.selected || this.hovered) {
             // if hovered/selected, border is larger but inset
-            ctx.lineWidth = 8;
-            ctx.arc(this.coords.x, this.coords.y, 47, 0, 2 * Math.PI);
+            ctx.lineWidth = 5;
+            ctx.setLineDash([10]);
+            ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
         } else {
             ctx.lineWidth = 5;
             ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
@@ -121,6 +123,7 @@ export class Node {
                 gradient.addColorStop(1, colors.LIGHTGRAY);
 
                 // Draw the actual link
+                ctx.setLineDash([0]);
                 ctx.lineWidth = 5;
                 ctx.strokeStyle = colors.LIGHTGRAY;
                 /*

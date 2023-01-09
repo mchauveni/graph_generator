@@ -3,9 +3,9 @@ import { User } from "./User.js";
 import { Node } from "./Node.js";
 import { Canvas } from "./Canvas.js";
 
-const colorWrapper = document.querySelector("#color_wrapper");
+export const colorWrapper = document.querySelector("#color_wrapper");
 
-function colorItem(colorName) {
+export function colorItem(colorName) {
     let div = document.createElement("div");
 
     div.classList.add("color_picker");
@@ -20,9 +20,3 @@ function colorItem(colorName) {
 
     return div;
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    for (const color in colors) {
-        colorWrapper.appendChild(colorItem(color));
-    }
-});

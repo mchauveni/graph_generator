@@ -1,7 +1,8 @@
-import { canvas, body, ctx, savebtn, colors, shadeColor, download } from "./config.js";
+import { canvas, ctx, savebtn, colors, shadeColor, download } from "./config.js";
 import { Canvas } from "./Canvas.js";
 import { User } from "./User.js";
 import { Node } from "./Node.js";
+import { colorWrapper, colorItem } from "./menu.js";
 
 /**
  * TODO :
@@ -30,6 +31,10 @@ window.addEventListener("resize", () => {
     canvas.height = window.visualViewport.height;
     Canvas.update();
 });
+
+for (const color in colors) {
+    colorWrapper.appendChild(colorItem(color));
+}
 
 // MOUSEDOWN ============================================================================================================================
 canvas.addEventListener("mousedown", (e) => {

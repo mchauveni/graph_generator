@@ -1,4 +1,4 @@
-import { colors, shadeColor } from "./config.js";
+import { colors, shadeColor, nodeMenu } from "./config.js";
 import { User } from "./User.js";
 import { Node } from "./Node.js";
 import { Canvas } from "./Canvas.js";
@@ -22,4 +22,20 @@ export function colorItem(colorName) {
     return div;
 }
 
-export function openMenu() {}
+// Create a color-click element in the menu for each existing color in the color array
+for (const color in colors) {
+    colorWrapper.appendChild(colorItem(color));
+}
+
+export function openMenu(nodeName) {
+    nodeMenu.classList.add("nodeClicked");
+    nodeNameViz.value = nodeName;
+}
+
+export function closeMenu() {
+    nodeMenu.classList.remove("nodeClicked");
+}
+
+nodeNameViz.addEventListener("input", () => {
+    Node.find(User.selectedNode).changeName(nodeNameViz.value);
+});

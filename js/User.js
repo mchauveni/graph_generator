@@ -1,6 +1,7 @@
 import { Node } from "./Node.js";
 import { Canvas } from "./Canvas.js";
-import { canvas, nodeMenu } from "./config.js";
+import { canvas } from "./config.js";
+import { openMenu, closeMenu } from "./menu.js";
 
 export class User {
     static selectedNode = -1;
@@ -37,7 +38,7 @@ export class User {
         this.selectedNode = id;
 
         if (id == -1) {
-            nodeMenu.classList.remove("nodeClicked");
+            closeMenu();
         }
 
         if (id != -1) {
@@ -57,7 +58,7 @@ export class User {
                 Node.allNodes.push(Node.allNodes.splice(nodeIndex, 1)[0]);
             }
 
-            nodeMenu.classList.add("nodeClicked");
+            openMenu(Node.find(id).name);
         }
 
         Canvas.update();

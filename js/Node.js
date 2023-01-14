@@ -1,3 +1,4 @@
+import { Canvas } from "./Canvas.js";
 import { ctx, colors, shadeColor, download } from "./config.js";
 
 export class Node {
@@ -85,6 +86,11 @@ export class Node {
             }
         });
         return foundNode;
+    }
+
+    changeName(newName) {
+        this.name = newName;
+        Canvas.update();
     }
 
     static checkData() {

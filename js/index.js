@@ -12,10 +12,10 @@ import { colorWrapper, colorItem } from "./menu.js";
  * - Custom menu to edit bolls (https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724)
  */
 
-let node1 = new Node(1, "Reginald", { x: 500, y: 200 }, [2, 3, 4]);
-let node2 = new Node(2, "Jean", { x: 300, y: 200 }, [1, 4], colors.BLURPLE);
-let node3 = new Node(3, "Henry", { x: 400, y: 300 }, [1], colors.YELLOW);
-let node4 = new Node(4, "Patrick", { x: 200, y: 300 }, [2, 1], colors.GREEN);
+new Node(1, "Reginald", { x: 500, y: 200 }, [2, 3, 4]);
+new Node(2, "Jean", { x: 300, y: 200 }, [1, 4], colors.BLURPLE);
+new Node(3, "Henry", { x: 400, y: 300 }, [1], colors.YELLOW);
+new Node(4, "Patrick", { x: 200, y: 300 }, [2, 1], colors.GREEN);
 
 try {
     Node.checkData();
@@ -31,10 +31,6 @@ window.addEventListener("resize", () => {
     canvas.height = window.visualViewport.height;
     Canvas.update();
 });
-
-for (const color in colors) {
-    colorWrapper.appendChild(colorItem(color));
-}
 
 // MOUSEDOWN ============================================================================================================================
 canvas.addEventListener("mousedown", (e) => {

@@ -15,9 +15,18 @@
         <span class="material-symbols-outlined icon">
             radio_button_checked
         </span>
-        <nav>
-            <button id="saveButton">Download</button>
-        </nav>
+        <div>
+            <div id="parameters">
+                <button id="save_button">Save</button>
+                <button id="download_button">Download</button>
+            </div>
+            <div id="separator"></div>
+            <div id="tools_wrapper">
+                <button id="tool_normal_cursor">Normal Cursor</button>
+                <button id="tool_new_node">New node</button>
+                <button id="tool_new_link">New Link</button>
+            </div>
+        </div>
     </header>
     <canvas width="10000" height="10000">
         Allez cheh
@@ -39,5 +48,6 @@
 
 <script type="module" src="js/index.js"></script>
 <script type="module" src="js/menu.js"></script>
+<script type="module" src="js/header.js"></script>
 
 </html>

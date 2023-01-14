@@ -1,5 +1,6 @@
 import { ctx, colors } from "./config.js";
 import { Node } from "./Node.js";
+import { User } from "./User.js";
 
 export class Canvas {
     static zoomFactor = 1;

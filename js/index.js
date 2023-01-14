@@ -1,8 +1,7 @@
-import { canvas, ctx, savebtn, colors, shadeColor, download } from "./config.js";
+import { canvas, ctx, colors, shadeColor, download } from "./config.js";
 import { Canvas } from "./Canvas.js";
 import { User } from "./User.js";
 import { Node } from "./Node.js";
-import { colorWrapper, colorItem } from "./menu.js";
 
 /**
  * TODO :
@@ -12,10 +11,10 @@ import { colorWrapper, colorItem } from "./menu.js";
  * - Custom menu to edit bolls (https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724)
  */
 
-new Node(1, "Reginald", { x: 500, y: 200 }, [2, 3, 4]);
-new Node(2, "Jean", { x: 300, y: 200 }, [1, 4], colors.BLURPLE);
-new Node(3, "Henry", { x: 400, y: 300 }, [1], colors.YELLOW);
-new Node(4, "Patrick", { x: 200, y: 300 }, [2, 1], colors.GREEN);
+new Node("Reginald", { x: 500, y: 200 }, [1, 2, 3]);
+new Node("Jean", { x: 300, y: 200 }, [0, 3], colors.BLURPLE);
+new Node("Henry", { x: 400, y: 300 }, [0], colors.YELLOW);
+new Node("Patrick", { x: 200, y: 300 }, [1, 0], colors.GREEN);
 
 try {
     Node.checkData();
@@ -47,6 +46,10 @@ canvas.addEventListener("mousedown", (e) => {
     }
 
     Canvas.update();
+
+    if (User.mode == "newNode") {
+        new Node("", User.mousePos(e), []);
+    }
 });
 
 // MOUSEUP ============================================================================================================================
@@ -68,11 +71,11 @@ canvas.addEventListener("mousemove", (e) => {
         User.mousedrag = true;
     }
 
-    //Reset hovered node
+    // Reset hovered node
     User.setHoveredNode(-1);
     let coords = User.mousePos(e);
 
-    /* Checks hover */
+    // Checks hover
     Node.drawAllLinks();
     Node.allNodes.forEach((node) => {
         node.draw();
@@ -92,6 +95,10 @@ canvas.addEventListener("mousemove", (e) => {
     }
 
     Canvas.update();
+
+    if (User.mode == "newNode") {
+        Node.drawOutline(User.mousePos(e));
+    }
 });
 
 // WHEEL (SCROLL) ============================================================================================================================
@@ -104,9 +111,4 @@ canvas.addEventListener("wheel", (e) => {
         //zoom in
         Canvas.zoom(0.1);
     }
-});
-
-// CLICK ON SAVE BUTTON ============================================================================================================================
-savebtn.addEventListener("click", () => {
-    Node.exportJSON();
 });

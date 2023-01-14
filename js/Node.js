@@ -4,6 +4,7 @@ import { ctx, colors, shadeColor, download } from "./config.js";
 export class Node {
     static allNodes = [];
     static links = [];
+    static lastNodeId = 0;
 
     /**
      * Constructor for a Node
@@ -14,8 +15,8 @@ export class Node {
      * @param {int} coords.y
      * @param {int[]} linkedNodes ID of all linked nodes
      */
-    constructor(id, name, coords, linkedNodes, color = colors.BLUE) {
-        this.id = id;
+    constructor(name, coords, linkedNodes, color = colors.BLUE) {
+        this.id = Node.lastNodeId;
         this.name = name;
         this.coords = coords;
         this.color = color;
@@ -24,6 +25,7 @@ export class Node {
         this.linkedNodes = linkedNodes;
 
         Node.allNodes.push(this);
+        Node.lastNodeId++;
     }
 
     static defaultNodePath(x, y) {
@@ -63,6 +65,16 @@ export class Node {
             ctx.lineWidth = 5;
             ctx.arc(this.coords.x, this.coords.y, 50, 0, 2 * Math.PI);
         }
+        ctx.stroke();
+    }
+
+    static drawOutline(coords) {
+        ctx.beginPath();
+        ctx.fillStyle = colors.BLACK;
+        ctx.strokeStyle = colors.BLACK;
+        ctx.lineWidth = 5;
+        ctx.setLineDash([10]);
+        ctx.arc(coords.x, coords.y, 50, 0, 2 * Math.PI);
         ctx.stroke();
     }
 

@@ -1,7 +1,6 @@
 export var canvas = document.querySelector("canvas");
 export var body = document.querySelector("body");
 export let ctx = canvas.getContext("2d");
-export let savebtn = document.querySelector("#saveButton");
 export let nodeMenu = document.querySelector("#node_config_menu");
 
 /* Size canvas to window size */

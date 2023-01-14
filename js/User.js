@@ -3,11 +3,14 @@ import { Canvas } from "./Canvas.js";
 import { canvas } from "./config.js";
 import { openMenu, closeMenu } from "./menu.js";
 
+let validModes = ["default", "newNode", "newLink"];
+
 export class User {
     static selectedNode = -1;
     static hoveredNode = -1;
     static mousedown = false;
     static mousedrag = false;
+    static mode = "default";
 
     static moveHandler = {
         lastClickCoords: {
@@ -91,5 +94,13 @@ export class User {
             y: mouse.clientY - rect.top,
         };
         return coords;
+    }
+
+    static changeMode(mode) {
+        if (!validModes.includes(mode)) {
+            throw "ERR : Mode not recognized";
+        }
+
+        this.mode = mode;
     }
 }

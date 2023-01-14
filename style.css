@@ -15,7 +15,6 @@ body {
 header {
     background-color: white;
     box-shadow: 0 0 15px -5px black;
-    height: 5rem;
     width: 100%;
     padding: 1rem;
     display: flex;
@@ -28,10 +27,27 @@ span.icon {
     margin-right: 1rem;
 }
 
-nav {
+header>div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#parameters {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+#separator {
+    margin: 0.25rem;
+    border-top: 1px solid grey;
+    width: 100%;
+}
+
+#tools_wrapper {
+    display: flex;
+    flex-direction: row;
 }
 
 button {

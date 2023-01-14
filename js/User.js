@@ -8,6 +8,7 @@ let validModes = ["default", "newNode", "newLink"];
 export class User {
     static selectedNode = -1;
     static hoveredNode = -1;
+    static concernedNodes = [];
     static mousedown = false;
     static mousedrag = false;
     static mode = "default";
@@ -34,12 +35,13 @@ export class User {
             return;
         }
 
-        /* Unselect currently selected node, if selected */
+        // Unselect currently selected node, if selected
         if (Node.find(User.selectedNode)) {
             Node.find(User.selectedNode).selected = false;
         }
         this.selectedNode = id;
 
+        // If explicitly said to unselect node, close menu
         if (id == -1) {
             closeMenu();
         }
@@ -60,7 +62,6 @@ export class User {
             if (nodeIndex < Node.allNodes.length - 1) {
                 Node.allNodes.push(Node.allNodes.splice(nodeIndex, 1)[0]);
             }
-
             openMenu(Node.find(id).name);
         }
 
@@ -76,6 +77,21 @@ export class User {
         if (id != -1) {
             Node.find(id).hovered = true;
         }
+
+        Canvas.update();
+    }
+
+    static addConcernedNode(id) {
+        this.concernedNodes.push(id);
+        Node.find(id).concerned = true;
+
+        Canvas.update();
+    }
+
+    static removeConcernedNode(id) {
+        index = this.concernedNodes.indexOf(id);
+        this.concernedNode.splice(index, 1);
+        Node.find(id).concerned = false;
 
         Canvas.update();
     }

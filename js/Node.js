@@ -22,6 +22,7 @@ export class Node {
         this.color = color;
         this.hovered = false;
         this.selected = false;
+        this.concerned = false;
         this.linkedNodes = linkedNodes;
 
         Node.allNodes.push(this);
@@ -56,7 +57,7 @@ export class Node {
         ctx.strokeStyle = shadeColor(this.color, -30);
 
         // Make border
-        if (this.selected || this.hovered) {
+        if (this.selected || this.hovered || this.concerned) {
             // if hovered/selected, border is larger but inset
             ctx.lineWidth = 5;
             ctx.setLineDash([10]);
@@ -102,6 +103,11 @@ export class Node {
 
     changeName(newName) {
         this.name = newName;
+        Canvas.update();
+    }
+
+    changeColor(color) {
+        this.color = color;
         Canvas.update();
     }
 

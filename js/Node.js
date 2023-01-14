@@ -94,7 +94,7 @@ export class Node {
     /**
      *
      * @param {int} id
-     * @returns {Node}
+     * @returns {Node} a node
      */
     static find(id) {
         let foundNode = null;
@@ -113,6 +113,18 @@ export class Node {
 
     changeColor(color) {
         this.color = color;
+        Canvas.update();
+    }
+
+    delete() {
+        Node.allNodes.splice(Node.allNodes.indexOf(this), 1);
+        Node.allNodes.forEach((node) => {
+            if (node.linkedNodes.includes(this.id)) {
+                node.linkedNodes.splice(node.linkedNodes.indexOf(this.id), 1);
+            }
+        });
+
+        delete this;
         Canvas.update();
     }
 

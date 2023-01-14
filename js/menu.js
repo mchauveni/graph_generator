@@ -5,6 +5,7 @@ import { Canvas } from "./Canvas.js";
 
 export const colorWrapper = document.querySelector("#color_wrapper");
 export const nodeNameViz = document.querySelector("#node_name");
+export const nodeDelete = document.querySelector("#node_delete");
 
 export function colorItem(colorName) {
     let div = document.createElement("div");
@@ -27,9 +28,10 @@ for (const color in colors) {
     colorWrapper.appendChild(colorItem(color));
 }
 
-export function openMenu(nodeName) {
+export function openMenu(node) {
+    nodeNameViz.value = node.name;
+    nodeDelete.dataset.nodeId = node.id;
     nodeMenu.classList.add("nodeClicked");
-    nodeNameViz.value = nodeName;
 }
 
 export function closeMenu() {
@@ -38,4 +40,8 @@ export function closeMenu() {
 
 nodeNameViz.addEventListener("input", () => {
     Node.find(User.selectedNode).changeName(nodeNameViz.value);
+});
+
+nodeDelete.addEventListener("click", () => {
+    Node.find(nodeDelete.dataset.nodeId).delete();
 });

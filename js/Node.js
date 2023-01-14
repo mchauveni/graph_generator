@@ -29,11 +29,12 @@ export class Node {
         Node.lastNodeId++;
     }
 
-    static defaultNodePath(x, y) {
+    static defaultNodePath(coords) {
         // Create circle
+        // it needs to be scaled after the zoom factor
+        // god please
         let circle = new Path2D();
-        ctx.arc(x, y, 50, 0, 2 * Math.PI);
-        ctx.fill(circle);
+        circle.arc(coords.x * (1 / Canvas.zoomFactor), coords.y * (1 / Canvas.zoomFactor), 50 * (1 / Canvas.zoomFactor), 0, 2 * Math.PI);
 
         return circle;
     }

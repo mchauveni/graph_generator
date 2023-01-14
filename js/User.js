@@ -56,8 +56,8 @@ export class User {
             // When selecting a Node, calculate offset from center of the node to cursor location
             // Useful only for the node not to blink to cursor if not centered properly
             this.moveHandler.offsetCoords = {
-                x: Node.find(id).coords.x * Canvas.zoomFactor - this.moveHandler.lastClickCoords.x,
-                y: Node.find(id).coords.y * Canvas.zoomFactor - this.moveHandler.lastClickCoords.y,
+                x: Node.find(id).coords.x * Canvas.zoomFactor - this.moveHandler.lastClickCoords.x * Canvas.zoomFactor,
+                y: Node.find(id).coords.y * Canvas.zoomFactor - this.moveHandler.lastClickCoords.y * Canvas.zoomFactor,
             };
 
             // Puts the node at the end of the Node.allNodes array
@@ -66,7 +66,7 @@ export class User {
             if (nodeIndex < Node.allNodes.length - 1) {
                 Node.allNodes.push(Node.allNodes.splice(nodeIndex, 1)[0]);
             }
-            openMenu(Node.find(id).name);
+            openMenu(Node.find(id));
         }
 
         Canvas.update();
@@ -110,8 +110,8 @@ export class User {
     static mousePos(mouse) {
         var rect = canvas.getBoundingClientRect();
         let coords = {
-            x: mouse.clientX - rect.left,
-            y: mouse.clientY - rect.top,
+            x: Math.round((mouse.clientX - rect.left) * (1 / Canvas.zoomFactor) * 100) / 100,
+            y: Math.round((mouse.clientY - rect.top) * (1 / Canvas.zoomFactor) * 100) / 100,
         };
         return coords;
     }

@@ -86,15 +86,14 @@ canvas.addEventListener("mousemove", (e) => {
     }
 
     User.mousecoords = User.mousePos(e);
+    //console.log(User.mousecoords);
 
     // Reset hovered node
     User.setHoveredNode(-1);
 
     // Checks hover
-    Node.drawAllLinks();
     Node.allNodes.forEach((node) => {
-        node.draw();
-        if (ctx.isPointInPath(User.mousecoords.x, User.mousecoords.y)) {
+        if (ctx.isPointInPath(Node.defaultNodePath(node.coords), User.mousecoords.x, User.mousecoords.y)) {
             User.setHoveredNode(node.id);
         }
     });
@@ -104,12 +103,28 @@ canvas.addEventListener("mousemove", (e) => {
         let node = Node.find(User.selectedNode);
 
         node.move({
-            x: (User.mousecoords.x + User.moveHandler.offsetCoords.x) * (1 / Canvas.zoomFactor),
-            y: (User.mousecoords.y + User.moveHandler.offsetCoords.y) * (1 / Canvas.zoomFactor),
+            x: User.mousecoords.x + User.moveHandler.offsetCoords.x,
+            y: User.mousecoords.y + User.moveHandler.offsetCoords.y,
         });
     }
 
     Canvas.update();
+
+    let rect = canvas.getBoundingClientRect();
+    let coords = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+    };
+    let fakePointer = new Path2D();
+    fakePointer.arc(coords.x, coords.y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = "black";
+    ctx.fill(fakePointer);
+
+    coords = User.mousePos(e);
+    let fakePointerBis = new Path2D();
+    fakePointerBis.arc(coords.x, coords.y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = "black";
+    ctx.fill(fakePointerBis);
 });
 
 // WHEEL (SCROLL) ============================================================================================================================

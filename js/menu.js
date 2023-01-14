@@ -15,7 +15,7 @@ export function colorItem(colorName) {
     div.dataset.color = colorName;
 
     div.addEventListener("click", () => {
-        Node.find(User.selectedNode).color = colors[div.dataset.color];
+        Node.find(User.selectedNode).changeColor(colors[div.dataset.color]);
         Canvas.update();
     });
 

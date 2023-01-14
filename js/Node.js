@@ -91,6 +91,11 @@ export class Node {
         };
     }
 
+    /**
+     *
+     * @param {int} id
+     * @returns {Node}
+     */
     static find(id) {
         let foundNode = null;
         Node.allNodes.forEach((node) => {
@@ -139,28 +144,40 @@ export class Node {
         this.allNodes.forEach((node) => {
             node.linkedNodes.forEach((linkedNode) => {
                 linkedNode = this.find(linkedNode);
-
-                //MAKE A GRADIENT
-                var gradient = ctx.createLinearGradient(node.coords.x, node.coords.y, linkedNode.coords.x, linkedNode.coords.y);
-                gradient.addColorStop(0, colors.BLACK);
-                gradient.addColorStop(0.7, colors.LIGHTGRAY);
-                gradient.addColorStop(1, colors.LIGHTGRAY);
-
-                // Draw the actual link
-                ctx.setLineDash([0]);
-                ctx.lineWidth = 5;
-                ctx.strokeStyle = colors.LIGHTGRAY;
-                /*
-                if (node.selected) {
-                    ctx.strokeStyle = gradient;
-                }
-                */
-                ctx.beginPath();
-                ctx.moveTo(node.coords.x, node.coords.y);
-                ctx.lineTo(linkedNode.coords.x, linkedNode.coords.y);
-                ctx.stroke();
+                Node.drawLink(node.coords, linkedNode.coords);
             });
         });
+    }
+
+    static drawLink(from, to, partial = false) {
+        if (partial) {
+            ctx.setLineDash([10]);
+        } else {
+            ctx.setLineDash([0]);
+        }
+
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = colors.LIGHTGRAY;
+
+        ctx.beginPath();
+        ctx.moveTo(from.x, from.y);
+        ctx.lineTo(to.x, to.y);
+        ctx.stroke();
+    }
+
+    static link(node1, node2) {
+        node1 = Node.find(node1);
+        node2 = Node.find(node2);
+
+        // IF LINK EXISTS, DELETE IT
+        if (node1.linkedNodes.includes(node2.id) || node2.linkedNodes.includes(node1.id)) {
+            node1.linkedNodes.splice(node1.linkedNodes.indexOf(node2.id), 1);
+            node2.linkedNodes.splice(node2.linkedNodes.indexOf(node1.id), 1);
+        } else {
+            // ELSE, CREATE IT
+            node1.linkedNodes.push(node2.id);
+            node2.linkedNodes.push(node1.id);
+        }
     }
 
     static drawAll() {

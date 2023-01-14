@@ -9,6 +9,10 @@ export class User {
     static selectedNode = -1;
     static hoveredNode = -1;
     static concernedNodes = [];
+    static mousecoords = {
+        x: 0,
+        y: 0,
+    };
     static mousedown = false;
     static mousedrag = false;
     static mode = "default";
@@ -89,8 +93,8 @@ export class User {
     }
 
     static removeConcernedNode(id) {
-        index = this.concernedNodes.indexOf(id);
-        this.concernedNode.splice(index, 1);
+        let index = this.concernedNodes.indexOf(id);
+        this.concernedNodes.splice(index, 1);
         Node.find(id).concerned = false;
 
         Canvas.update();

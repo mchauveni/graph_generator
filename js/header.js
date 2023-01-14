@@ -16,17 +16,20 @@ downloadbtn.addEventListener("click", () => {
 defaultModebtn.addEventListener("click", () => {
     User.changeMode("default");
     console.log("User mode changed : " + User.mode);
+    User.setSelectedNode(-1);
     Canvas.update();
 });
 
 newNodebtn.addEventListener("click", () => {
     User.changeMode("newNode");
     console.log("User mode changed : " + User.mode);
+    User.setSelectedNode(-1);
     Canvas.update();
 });
 
 newLinkbtn.addEventListener("click", () => {
     User.changeMode("newLink");
     console.log("User mode changed : " + User.mode);
+    User.setSelectedNode(-1);
     Canvas.update();
 });

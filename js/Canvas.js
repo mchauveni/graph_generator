@@ -31,7 +31,20 @@ export class Canvas {
         ctx.rect(0, 0, window.visualViewport.width * (1 / this.zoomFactor), window.visualViewport.height * (1 / this.zoomFactor));
         ctx.fill();
 
-        /* Draw links and nodes */
-        Node.drawAll();
+        switch (User.mode) {
+            case "default":
+                Node.drawAll();
+                break;
+            case "newNode":
+                Node.drawAll();
+                Node.drawOutline(User.mousecoords);
+                break;
+            case "newLink":
+                if (User.concernedNodes[0]) {
+                    Node.drawLink(Node.find(User.concernedNodes[0]).coords, User.mousecoords, true);
+                }
+                Node.drawAll();
+                break;
+        }
     }
 }

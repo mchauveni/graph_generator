@@ -37,18 +37,32 @@ canvas.addEventListener("mousedown", (e) => {
     User.registerCoords(User.mousePos(e));
     User.mousedown = true;
 
-    // If user clicks on the selected node or canvas, deselect the current node
-    // else select the node they clicked
-    if (User.hoveredNode != -1 && e.button == 0) {
-        User.setSelectedNode(User.hoveredNode);
-    } else {
-        User.setSelectedNode(-1);
-    }
-
-    Canvas.update();
-
-    if (User.mode == "newNode") {
-        new Node("", User.mousePos(e), []);
+    switch (User.mode) {
+        case "default":
+            // If user clicks on the selected node or canvas, deselect the current node
+            // else select the node they clicked
+            if (User.hoveredNode != -1 && e.button == 0) {
+                User.setSelectedNode(User.hoveredNode);
+            } else {
+                User.setSelectedNode(-1);
+            }
+            break;
+        case "newNode":
+            new Node("", User.mousePos(e), []);
+            break;
+        case "newLink":
+            if (User.hoveredNode == -1) {
+                return;
+            }
+            if (User.concernedNodes.length == 0) {
+                User.addConcernedNode(User.hoveredNode);
+            } else {
+                User.addConcernedNode(User.hoveredNode);
+                Node.link(User.concernedNodes[0], User.concernedNodes[1]);
+                User.removeConcernedNode(User.concernedNodes[1]);
+                User.removeConcernedNode(User.concernedNodes[0]);
+            }
+            break;
     }
 });
 
@@ -71,15 +85,16 @@ canvas.addEventListener("mousemove", (e) => {
         User.mousedrag = true;
     }
 
+    User.mousecoords = User.mousePos(e);
+
     // Reset hovered node
     User.setHoveredNode(-1);
-    let coords = User.mousePos(e);
 
     // Checks hover
     Node.drawAllLinks();
     Node.allNodes.forEach((node) => {
         node.draw();
-        if (ctx.isPointInPath(coords.x, coords.y)) {
+        if (ctx.isPointInPath(User.mousecoords.x, User.mousecoords.y)) {
             User.setHoveredNode(node.id);
         }
     });
@@ -89,16 +104,12 @@ canvas.addEventListener("mousemove", (e) => {
         let node = Node.find(User.selectedNode);
 
         node.move({
-            x: (coords.x + User.moveHandler.offsetCoords.x) * (1 / Canvas.zoomFactor),
-            y: (coords.y + User.moveHandler.offsetCoords.y) * (1 / Canvas.zoomFactor),
+            x: (User.mousecoords.x + User.moveHandler.offsetCoords.x) * (1 / Canvas.zoomFactor),
+            y: (User.mousecoords.y + User.moveHandler.offsetCoords.y) * (1 / Canvas.zoomFactor),
         });
     }
 
     Canvas.update();
-
-    if (User.mode == "newNode") {
-        Node.drawOutline(User.mousePos(e));
-    }
 });
 
 // WHEEL (SCROLL) ============================================================================================================================

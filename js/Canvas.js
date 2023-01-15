@@ -40,9 +40,10 @@ export class Canvas {
                 Node.drawOutline(User.mousecoords);
                 break;
             case "newLink":
-                if (User.concernedNodes[0]) {
+                if (User.concernedNodes[0] != undefined) {
                     Node.drawLink(Node.find(User.concernedNodes[0]).coords, User.mousecoords, true);
                 }
+
                 Node.drawAll();
                 break;
         }

@@ -162,6 +162,16 @@ export class Node {
         });
     }
 
+    /**
+     *
+     * @param {Object} from Where the link starts from
+     * @param {int} from.x
+     * @param {int} from.y
+     * @param {Object} to Where the link goes
+     * @param {int} to.x
+     * @param {int} to.y
+     * @param {boolean} partial Is the link dashed
+     */
     static drawLink(from, to, partial = false) {
         if (partial) {
             ctx.setLineDash([10]);

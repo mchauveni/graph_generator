@@ -86,7 +86,6 @@ canvas.addEventListener("mousemove", (e) => {
     }
 
     User.mousecoords = User.mousePos(e);
-    //console.log(User.mousecoords);
 
     // Reset hovered node
     User.setHoveredNode(-1);
@@ -98,7 +97,7 @@ canvas.addEventListener("mousemove", (e) => {
         }
     });
 
-    /* Moves the selected node */
+    // Moves the selected node
     if (User.selectedNode != -1 && User.mousedown) {
         let node = Node.find(User.selectedNode);
 

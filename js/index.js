@@ -1,6 +1,7 @@
 import { canvas, ctx, colors, shadeColor, download } from "./config.js";
 import { Canvas } from "./Canvas.js";
 import { User } from "./User.js";
+import { Link } from "./Link.js";
 import { Node } from "./Node.js";
 
 /**
@@ -11,10 +12,10 @@ import { Node } from "./Node.js";
  * - Custom menu to edit bolls (https://itnext.io/how-to-create-a-custom-right-click-menu-with-javascript-9c368bb58724)
  */
 
-new Node("Reginald", { x: 500, y: 200 }, [1, 2, 3]);
-new Node("Jean", { x: 300, y: 200 }, [0, 3], colors.BLURPLE);
-new Node("Henry", { x: 400, y: 300 }, [0], colors.YELLOW);
-new Node("Patrick", { x: 200, y: 300 }, [1, 0], colors.GREEN);
+new Node("Reginald", { x: 500, y: 200 });
+new Node("Jean", { x: 300, y: 200 }, colors.BLURPLE);
+new Node("Henry", { x: 400, y: 300 }, colors.YELLOW);
+new Node("Patrick", { x: 200, y: 300 }, colors.GREEN);
 
 try {
     Node.checkData();
@@ -48,7 +49,7 @@ canvas.addEventListener("mousedown", (e) => {
             }
             break;
         case "newNode":
-            new Node("", User.mousePos(e), []);
+            new Node("", User.mousePos(e));
             break;
         case "newLink":
             if (User.hoveredNode == -1) {
@@ -58,7 +59,7 @@ canvas.addEventListener("mousedown", (e) => {
                 User.addConcernedNode(User.hoveredNode);
             } else {
                 User.addConcernedNode(User.hoveredNode);
-                Node.link(User.concernedNodes[0], User.concernedNodes[1]);
+                Link.link(Node.find(User.concernedNodes[0]), Node.find(User.concernedNodes[1]));
                 User.removeConcernedNode(User.concernedNodes[1]);
                 User.removeConcernedNode(User.concernedNodes[0]);
             }

@@ -1,9 +1,9 @@
 import { Canvas } from "./Canvas.js";
+import { Link } from "./Link.js";
 import { ctx, colors, shadeColor, download } from "./config.js";
 
 export class Node {
     static allNodes = [];
-    static links = [];
     static lastNodeId = 0;
 
     /**
@@ -13,9 +13,8 @@ export class Node {
      * @param {Object} coords must be {x, y}
      * @param {int} coords.x
      * @param {int} coords.y
-     * @param {int[]} linkedNodes ID of all linked nodes
      */
-    constructor(name, coords, linkedNodes, color = colors.BLUE) {
+    constructor(name, coords, color = colors.BLUE) {
         this.id = Node.lastNodeId;
         this.name = name;
         this.coords = coords;
@@ -23,7 +22,6 @@ export class Node {
         this.hovered = false;
         this.selected = false;
         this.concerned = false;
-        this.linkedNodes = linkedNodes;
 
         Node.allNodes.push(this);
         Node.lastNodeId++;
@@ -81,6 +79,21 @@ export class Node {
     }
 
     /**
+     *
+     * @param {int} id
+     * @returns {Node} a node
+     */
+    static find(id) {
+        let foundNode = null;
+        this.allNodes.forEach((node) => {
+            if (node.id == id) {
+                foundNode = node;
+            }
+        });
+        return foundNode;
+    }
+
+    /**
      * Moves a Node to said coordinates
      *
      * @param {*} coords
@@ -90,21 +103,6 @@ export class Node {
             x: coords.x,
             y: coords.y,
         };
-    }
-
-    /**
-     *
-     * @param {int} id
-     * @returns {Node} a node
-     */
-    static find(id) {
-        let foundNode = null;
-        Node.allNodes.forEach((node) => {
-            if (node.id == id) {
-                foundNode = node;
-            }
-        });
-        return foundNode;
     }
 
     changeName(newName) {
@@ -137,74 +135,10 @@ export class Node {
                 throw "ID is duplicate ! (" + node.id + ")";
             }
             allIDs.push(node.id);
-
-            /* Checks that every link is valid AND two-way */
-            node.linkedNodes.forEach((nodeID) => {
-                let linkedNode = this.find(nodeID); //retrieve object from ID
-                if (linkedNode === null) {
-                    throw `Invalid linked node ID ! (${node.name} (${node.id}) has invalid link (${nodeID}))`;
-                } else {
-                    if (!linkedNode.linkedNodes.includes(node.id)) {
-                        throw `Link is not two-way ! (${node.name} (${node.id}) is linked to ${linkedNode.name} (${linkedNode.id}) but it is not linked back)`;
-                    }
-                }
-            });
         });
-    }
-
-    static drawAllLinks() {
-        //PROBLEM : EVERY LINKS DRAW TWICE
-        this.allNodes.forEach((node) => {
-            node.linkedNodes.forEach((linkedNode) => {
-                linkedNode = this.find(linkedNode);
-                Node.drawLink(node.coords, linkedNode.coords);
-            });
-        });
-    }
-
-    /**
-     *
-     * @param {Object} from Where the link starts from
-     * @param {int} from.x
-     * @param {int} from.y
-     * @param {Object} to Where the link goes
-     * @param {int} to.x
-     * @param {int} to.y
-     * @param {boolean} partial Is the link dashed
-     */
-    static drawLink(from, to, partial = false) {
-        if (partial) {
-            ctx.setLineDash([10]);
-        } else {
-            ctx.setLineDash([0]);
-        }
-
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = colors.LIGHTGRAY;
-
-        ctx.beginPath();
-        ctx.moveTo(from.x, from.y);
-        ctx.lineTo(to.x, to.y);
-        ctx.stroke();
-    }
-
-    static link(node1, node2) {
-        node1 = Node.find(node1);
-        node2 = Node.find(node2);
-
-        // IF LINK EXISTS, DELETE IT
-        if (node1.linkedNodes.includes(node2.id) || node2.linkedNodes.includes(node1.id)) {
-            node1.linkedNodes.splice(node1.linkedNodes.indexOf(node2.id), 1);
-            node2.linkedNodes.splice(node2.linkedNodes.indexOf(node1.id), 1);
-        } else {
-            // ELSE, CREATE IT
-            node1.linkedNodes.push(node2.id);
-            node2.linkedNodes.push(node1.id);
-        }
     }
 
     static drawAll() {
-        this.drawAllLinks();
         this.allNodes.forEach((node) => {
             node.draw();
         });

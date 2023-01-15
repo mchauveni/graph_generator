@@ -1,5 +1,6 @@
 import { ctx, colors } from "./config.js";
 import { Node } from "./Node.js";
+import { Link } from "./Link.js";
 import { User } from "./User.js";
 
 export class Canvas {
@@ -33,17 +34,23 @@ export class Canvas {
 
         switch (User.mode) {
             case "default":
+                Link.drawAll();
                 Node.drawAll();
                 break;
             case "newNode":
+                Link.drawAll();
                 Node.drawAll();
                 Node.drawOutline(User.mousecoords);
                 break;
             case "newLink":
-                if (User.concernedNodes[0] != undefined) {
-                    Node.drawLink(Node.find(User.concernedNodes[0]).coords, User.mousecoords, true);
+                // Draw partial link from node1 to node2 if a node is selected and another hovered.
+                // Draw partial link from node1 to cursor otherwise
+                if (User.concernedNodes[0] != undefined && User.hoveredNode != -1) {
+                    Link.draw(Node.find(User.concernedNodes[0]).coords, Node.find(User.hoveredNode).coords, true);
+                } else if (User.concernedNodes[0] != undefined) {
+                    Link.draw(Node.find(User.concernedNodes[0]).coords, User.mousecoords, true);
                 }
-
+                Link.drawAll();
                 Node.drawAll();
                 break;
         }

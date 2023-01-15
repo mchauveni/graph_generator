@@ -109,7 +109,7 @@ canvas.addEventListener("mousemove", (e) => {
     }
 
     Canvas.update();
-    /* 
+
     // DEBUG FOR CURSOR POSITION
     let rect = canvas.getBoundingClientRect();
     let coords = {
@@ -125,7 +125,7 @@ canvas.addEventListener("mousemove", (e) => {
     let fakePointerBis = new Path2D();
     fakePointerBis.arc(coords.x, coords.y, 5, 0, 2 * Math.PI);
     ctx.fillStyle = "black";
-    ctx.fill(fakePointerBis); */
+    ctx.fill(fakePointerBis);
 });
 
 // WHEEL (SCROLL) ============================================================================================================================

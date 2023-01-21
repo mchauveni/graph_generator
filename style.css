@@ -17,6 +17,7 @@ header {
     box-shadow: 0 0 15px -5px black;
     width: 100%;
     padding: 1rem;
+    padding-bottom: 5px;
     display: flex;
 }
 
@@ -59,8 +60,15 @@ button {
     background-color: transparent;
 }
 
-button:hover {
+button:hover,
+button.active {
     background-color: #ebebeb;
+}
+
+button img {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 canvas {

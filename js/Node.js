@@ -117,13 +117,13 @@ export class Node {
 
     delete() {
         Node.allNodes.splice(Node.allNodes.indexOf(this), 1);
-        Node.allNodes.forEach((node) => {
-            if (node.linkedNodes.includes(this.id)) {
-                node.linkedNodes.splice(node.linkedNodes.indexOf(this.id), 1);
-            }
+        Link.findByNodes(this).forEach((link) => {
+            link.delete();
         });
 
-        delete this;
+        for (const property in this) {
+            delete this[property];
+        }
         Canvas.update();
     }
 

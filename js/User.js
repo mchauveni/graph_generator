@@ -2,6 +2,7 @@ import { Node } from "./Node.js";
 import { Canvas } from "./Canvas.js";
 import { canvas } from "./config.js";
 import { openMenu, closeMenu } from "./menu.js";
+import { defaultModebtn, newNodebtn, newLinkbtn } from "./header.js";
 
 let validModes = ["default", "newNode", "newLink"];
 
@@ -107,6 +108,12 @@ export class User {
         };
     }
 
+    /**
+     * Register the position of the mouse, with the canvas zoom factor.
+     *
+     * @param {mouseEvent} mouse a mouseEvent
+     * @returns {Object} coords.x & coords.y
+     */
     static mousePos(mouse) {
         var rect = canvas.getBoundingClientRect();
         let coords = {
@@ -117,8 +124,29 @@ export class User {
     }
 
     static changeMode(mode) {
+        // Checks mode
         if (!validModes.includes(mode)) {
             throw "ERR : Mode not recognized";
+        }
+
+        // Puts an "active" class on the button corresponding to selected mode
+        let allButtons = [defaultModebtn, newNodebtn, newLinkbtn];
+        allButtons.forEach((button) => {
+            button.classList.remove("active");
+        });
+
+        switch (mode) {
+            case "default":
+                defaultModebtn.classList.add("active");
+                break;
+
+            case "newNode":
+                newNodebtn.classList.add("active");
+                break;
+
+            case "newLink":
+                newLinkbtn.classList.add("active");
+                break;
         }
 
         this.mode = mode;

@@ -12,7 +12,7 @@ export class Link {
      * @param {*} width
      */
     constructor(nodes, color = colors.LIGHTGRAY, width = 5) {
-        this.id = Node.lastNodeId;
+        this.id = Link.lastLinkId;
         this.nodes = nodes;
         this.color = color;
         this.width = width;
@@ -25,14 +25,31 @@ export class Link {
 
     static link(node1, node2) {
         if (this.findByNodes(node1, node2)) {
+            this.findByNodes(node1, node2).delete();
         }
         new Link([node1, node2]);
     }
 
-    static findByNodes(node1, node2) {
-        let foundLink = null;
+    /**
+     * Search if a link between two nodes exists, or search every link of this node
+     *
+     * @param {int} node1 id of a node
+     * @param {int} node2 id of a second node
+     * @returns a link or array of links
+     */
+    static findByNodes(node1, node2 = null) {
+        let foundLink;
+
+        if (node2 != null) {
+            foundLink = null;
+        } else {
+            foundLink = [];
+        }
+
         this.allLinks.forEach((link) => {
-            if (link.nodes.includes(node1) && link.nodes.includes(node2)) {
+            if (link.nodes.includes(node1) && node2 == null) {
+                foundLink.push(link);
+            } else if (link.nodes.includes(node1) && link.nodes.includes(node2)) {
                 foundLink = link;
             }
         });
@@ -53,8 +70,9 @@ export class Link {
 
     delete() {
         Link.allLinks.splice(Link.allLinks.indexOf(this), 1);
-        delete this;
-
+        for (const property in this) {
+            delete this[property];
+        }
         Canvas.update();
     }
 

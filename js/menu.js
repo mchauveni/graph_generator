@@ -6,8 +6,10 @@ import { Canvas } from "./Canvas.js";
 export const colorWrapper = document.querySelector("#color_wrapper");
 export const nodeNameViz = document.querySelector("#node_name");
 export const nodeDelete = document.querySelector("#node_delete");
+export const nodeFormCircle = document.querySelector("#node_form_circle");
+export const nodeFormSquare = document.querySelector("#node_form_square");
 
-export function colorItem(colorName) {
+function colorItem(colorName) {
     let div = document.createElement("div");
 
     div.classList.add("color_picker");
@@ -44,4 +46,11 @@ nodeNameViz.addEventListener("input", () => {
 
 nodeDelete.addEventListener("click", () => {
     Node.find(nodeDelete.dataset.nodeId).delete();
+});
+
+nodeFormCircle.addEventListener("click", () => {
+    Node.find(nodeDelete.dataset.nodeId).changeType("circle");
+});
+nodeFormSquare.addEventListener("click", () => {
+    Node.find(nodeDelete.dataset.nodeId).changeType("square");
 });

@@ -13,7 +13,7 @@ import { Node } from "./Node.js";
  */
 
 new Node("Reginald", { x: 500, y: 200 });
-new Node("Jean", { x: 300, y: 200 }, colors.BLURPLE);
+new Node("Jean", { x: 300, y: 200 }, colors.BLURPLE, "square");
 new Node("Henry", { x: 400, y: 300 }, colors.YELLOW);
 new Node("Patrick", { x: 200, y: 300 }, colors.GREEN);
 
@@ -93,7 +93,7 @@ canvas.addEventListener("mousemove", (e) => {
 
     // Checks hover
     Node.allNodes.forEach((node) => {
-        if (ctx.isPointInPath(Node.defaultNodePath(node.coords), User.mousecoords.x, User.mousecoords.y)) {
+        if (ctx.isPointInPath(Node.defaultNodePath(node.coords, node.formType), User.mousecoords.x, User.mousecoords.y)) {
             User.setHoveredNode(node.id);
         }
     });

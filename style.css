@@ -96,6 +96,10 @@ canvas {
     margin: 2rem 0;
 }
 
+#node_config_menu h3 {
+    margin-bottom: 0.75rem;
+}
+
 #node_name_wrapper {
     display: flex;
     flex-direction: column;

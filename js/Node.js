@@ -34,7 +34,12 @@ export class Node {
 
         switch (type) {
             case "square":
-                path.rect((coords.x - 45) * (1 / Canvas.zoomFactor), (coords.y - 45) * (1 / Canvas.zoomFactor), 90 * (1 / Canvas.zoomFactor), 90 * (1 / Canvas.zoomFactor));
+                path.rect(
+                    (coords.x - 45) * (1 / Canvas.zoomFactor),
+                    (coords.y - 45) * (1 / Canvas.zoomFactor),
+                    90 * (1 / Canvas.zoomFactor),
+                    90 * (1 / Canvas.zoomFactor)
+                );
                 break;
 
             case "circle":
@@ -42,7 +47,13 @@ export class Node {
                 // Create circle
                 // it needs to be scaled after the zoom factor
                 // god please
-                path.arc(coords.x * (1 / Canvas.zoomFactor), coords.y * (1 / Canvas.zoomFactor), 50 * (1 / Canvas.zoomFactor), 0, 2 * Math.PI);
+                path.arc(
+                    coords.x * (1 / Canvas.zoomFactor),
+                    coords.y * (1 / Canvas.zoomFactor),
+                    50 * (1 / Canvas.zoomFactor),
+                    0,
+                    2 * Math.PI
+                );
                 break;
         }
         return path;
@@ -114,6 +125,15 @@ export class Node {
             }
         });
         return foundNode;
+    }
+
+    hasLink() {
+        console.log(Link.findByNodes(this.id));
+        if (Link.findByNodes(this.id)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

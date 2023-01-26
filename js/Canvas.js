@@ -43,14 +43,25 @@ export class Canvas {
                 Node.drawOutline(User.mousecoords);
                 break;
             case "newLink":
+                Link.drawAll();
+
                 // Draw partial link from node1 to node2 if a node is selected and another hovered.
                 // Draw partial link from node1 to cursor otherwise
                 if (User.concernedNodes[0] != undefined && User.hoveredNode != -1) {
-                    Link.draw(Node.find(User.concernedNodes[0]).coords, Node.find(User.hoveredNode).coords, true);
+                    let color = colors.LIGHTGRAY;
+                    let partial = true;
+
+                    if (Node.find(User.hoveredNode).hasLink()) {
+                        partial = false;
+                        color = colors.RED;
+                    }
+
+                    Link.draw(Node.find(User.concernedNodes[0]).coords, Node.find(User.hoveredNode).coords, partial, color);
+
                 } else if (User.concernedNodes[0] != undefined) {
                     Link.draw(Node.find(User.concernedNodes[0]).coords, User.mousecoords, true);
                 }
-                Link.drawAll();
+
                 Node.drawAll();
                 break;
         }

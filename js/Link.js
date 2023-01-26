@@ -26,8 +26,9 @@ export class Link {
     static link(node1, node2) {
         if (this.findByNodes(node1, node2)) {
             this.findByNodes(node1, node2).delete();
+        } else {
+            new Link([node1, node2]);
         }
-        new Link([node1, node2]);
     }
 
     /**
@@ -38,16 +39,16 @@ export class Link {
      * @returns a link or array of links
      */
     static findByNodes(node1, node2 = null) {
-        let foundLink;
+        let foundLink = null;
 
-        if (node2 != null) {
-            foundLink = null;
-        } else {
-            foundLink = [];
-        }
+        foundLink = null;
 
         this.allLinks.forEach((link) => {
             if (link.nodes.includes(node1) && node2 == null) {
+                if (foundLink == null) {
+                    foundLink = [];
+                }
+
                 foundLink.push(link);
             } else if (link.nodes.includes(node1) && link.nodes.includes(node2)) {
                 foundLink = link;
@@ -97,7 +98,7 @@ export class Link {
      * @param {int} to.y
      * @param {boolean} partial Is the link dashed
      */
-    static draw(from, to, partial = false) {
+    static draw(from, to, partial = false, color = colors.LIGHTGRAY) {
         if (partial) {
             ctx.setLineDash([10]);
         } else {
@@ -105,7 +106,7 @@ export class Link {
         }
 
         ctx.lineWidth = 5;
-        ctx.strokeStyle = colors.LIGHTGRAY;
+        ctx.strokeStyle = color;
 
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);

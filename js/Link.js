@@ -39,9 +39,13 @@ export class Link {
      * @returns a link or array of links
      */
     static findByNodes(node1, node2 = null) {
-        let foundLink = null;
+        let foundLink;
 
-        foundLink = null;
+        if (node2 != null) {
+            foundLink = null;
+        } else {
+            foundLink = [];
+        }
 
         this.allLinks.forEach((link) => {
             if (link.nodes.includes(node1) && node2 == null) {
@@ -51,7 +55,7 @@ export class Link {
 
                 foundLink.push(link);
             } else if (link.nodes.includes(node1) && link.nodes.includes(node2)) {
-                foundLink = link;
+                foundLink.push(link);
             }
         });
 
@@ -71,10 +75,13 @@ export class Link {
 
     delete() {
         Link.allLinks.splice(Link.allLinks.indexOf(this), 1);
+
         for (const property in this) {
             delete this[property];
         }
         Canvas.update();
+
+        console.log(Link.allLinks);
     }
 
     /**

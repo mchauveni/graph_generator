@@ -24,8 +24,8 @@ export class Link {
     }
 
     static link(node1, node2) {
-        if (this.findByNodes(node1, node2)) {
-            this.findByNodes(node1, node2).delete();
+        if (this.findByNodes(node1, node2).length != 0) {
+            this.findByNodes(node1, node2)[0].delete();
         } else {
             new Link([node1, node2]);
         }
@@ -34,25 +34,15 @@ export class Link {
     /**
      * Search if a link between two nodes exists, or search every link of this node
      *
-     * @param {int} node1 id of a node
-     * @param {int} node2 id of a second node
+     * @param {Node} node1 FUCKING NODE
+     * @param {Node} node2 FUCKING NODE
      * @returns a link or array of links
      */
     static findByNodes(node1, node2 = null) {
-        let foundLink;
-
-        if (node2 != null) {
-            foundLink = null;
-        } else {
-            foundLink = [];
-        }
+        let foundLink = [];
 
         this.allLinks.forEach((link) => {
             if (link.nodes.includes(node1) && node2 == null) {
-                if (foundLink == null) {
-                    foundLink = [];
-                }
-
                 foundLink.push(link);
             } else if (link.nodes.includes(node1) && link.nodes.includes(node2)) {
                 foundLink.push(link);
@@ -80,8 +70,6 @@ export class Link {
             delete this[property];
         }
         Canvas.update();
-
-        console.log(Link.allLinks);
     }
 
     /**

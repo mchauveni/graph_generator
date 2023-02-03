@@ -128,8 +128,8 @@ export class Node {
     }
 
     hasLink() {
-        console.log(Link.findByNodes(this.id));
-        if (Link.findByNodes(this.id)) {
+        console.log(Link.findByNodes(this).length);
+        if (Link.findByNodes(this.id).length >= 0) {
             return true;
         } else {
             return false;

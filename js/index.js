@@ -53,6 +53,9 @@ canvas.addEventListener("mousedown", (e) => {
             break;
         case "newLink":
             if (User.hoveredNode == -1) {
+                if (User.concernedNodes.length != 0) {
+                    User.removeConcernedNode(User.concernedNodes[0]);
+                }
                 return;
             }
             if (User.concernedNodes.length == 0) {

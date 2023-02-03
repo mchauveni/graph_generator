@@ -51,11 +51,12 @@ export class Canvas {
                     let color = colors.LIGHTGRAY;
                     let partial = true;
 
-                    if (Node.find(User.hoveredNode).hasLink()) {
+                    if (Link.findByNodes(Node.find(User.concernedNodes[0]), Node.find(User.hoveredNode)).length != 0) {
                         partial = false;
                         color = colors.RED;
                     }
 
+                    //console.log(color);
                     Link.draw(Node.find(User.concernedNodes[0]).coords, Node.find(User.hoveredNode).coords, partial, color);
 
                 } else if (User.concernedNodes[0] != undefined) {
